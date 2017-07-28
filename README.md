@@ -5,4 +5,6 @@
 
 
 ### 1、pack_excel
-将多个excel合并成一个
+将多个excel合并成一个。
+
+pack_multiple_excel_to_one.exe是win7下的可执行程序。
