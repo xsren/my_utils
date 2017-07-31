@@ -26,7 +26,6 @@ def run():
     fpath = '.'
 
     i = 1
-    row_idx = 1
     for fname in os.listdir(fpath):
         if fname.endswith(".xlsx"):
             wb_r = load_workbook(filename=fname)
@@ -34,17 +33,12 @@ def run():
             j = 1
             print fname
 
-            # import pdb
-            # pdb.set_trace()
             for row in ws_r.rows:
 
                 new_cells = []
 
-                column = 1
                 for cell in row:
                     new_cell = WriteOnlyCell(ws_w, value=cell.value)
-                    # new_cell = ws_w.cell(row=row_idx,
-                    #                      column=column, value=cell.value)
                     if cell.has_style:
                         new_cell.font = copy(cell.font)
                         new_cell.border = copy(cell.border)
@@ -53,25 +47,19 @@ def run():
                         new_cell.protection = copy(cell.protection)
                         new_cell.alignment = copy(cell.alignment)
                     new_cells.append(new_cell)
-                    column += 1
-                row_idx += 1
 
                 if i == 1:
                     if j == 1:
                         ws_w.title = ws_r.title
                         ws_w.column_dimensions = ws_r.column_dimensions
                     ws_w.append(new_cells)
-                    row_idx += 1
-                    # ws_w.append(row)
                 else:
                     if j >= 4:
                         ws_w.append(new_cells)
-                        row_idx += 1
-                        # ws_w.append(row)
                 j += 1
             i += 1
 
-    today = time.strftime('%Y%m%d_%H:%M:%S', time.localtime(time.time()))
+    today = time.strftime('%Y%m%d', time.localtime(time.time()))
     wb.save('new_file_%s.xlsx' % today)
 
 
